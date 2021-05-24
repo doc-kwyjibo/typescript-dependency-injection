@@ -1,9 +1,5 @@
-import { Bar, Foo } from "./helperClasses";
+import { Bar } from "./helperClasses";
 import Singleton from '../src/Descriptors/singleton';
-import ServiceProvider from "../src/serviceProvider";
-import { Mock } from 'moq.ts';
-
-const mockServiceProvider = new Mock<ServiceProvider>().object();
 
 describe("Singleton", () => {
     test("Construction using ofType stores service name and implementation", () => {
