@@ -1,7 +1,11 @@
-import ServiceProvider from "../serviceProvider";
+export interface Type<T> extends Function {
+    new (...args: any[]): T;
+}
 
 export default interface ServiceDescriptor {
     readonly serviceName: string;
 
-    getImplementation(provider: ServiceProvider): any;
+    readonly constructorFunction: Type<any>;
+
+    readonly dependencies: string[];
 }

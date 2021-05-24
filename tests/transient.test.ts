@@ -6,35 +6,21 @@ import { Mock } from 'moq.ts';
 const mockServiceProvider = new Mock<ServiceProvider>().object();
 
 describe("Transient", () => {
-    test("Construction using fromInstance stores service name and implementation", () => {
-        const serviceName = "MyService";
-        const implementation = new Foo();
-
-        const descriptor = Transient.fromInstance(serviceName, implementation);
-
-        expect(descriptor.serviceName).toEqual(serviceName);
-        expect(descriptor.getImplementation(mockServiceProvider)).toBe(implementation);
-    });
-
     test("Construction using fromFactory stores service name and implementation", () => {
         const serviceName = "MyService";
-        const factory = (provider: ServiceProvider) => new Bar(new Foo());
 
-        const descriptor = Transient.fromFactory(serviceName, factory);
+        const descriptor = Transient.ofType(serviceName, Bar);
 
         expect(descriptor.serviceName).toEqual(serviceName);
-        const instance = descriptor.getImplementation(mockServiceProvider);
+        const instance = new descriptor.constructorFunction();
         expect(instance instanceof Bar).toBeTruthy();
     });
 
-    test("Different instances of the implementation are returned on multiple calls", () => {
+    test("Able to store dependency list", () => {
         const serviceName = "MyService";
-        const factory = (provider: ServiceProvider) => new Bar(new Foo());
 
-        const descriptor = Transient.fromFactory(serviceName, factory);
+        const descriptor = Transient.ofType(serviceName, Foo).withDependencies(["A"]);
 
-        const instance1 = descriptor.getImplementation(mockServiceProvider);
-        const instance2 = descriptor.getImplementation(mockServiceProvider);
-        expect(Object.is(instance1, instance2)).toBeFalsy();
+        expect(descriptor.dependencies).toEqual(["A"]);
     });
 });

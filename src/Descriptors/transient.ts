@@ -1,23 +1,22 @@
-import ServiceProvider from "../serviceProvider";
-import ServiceDescriptor from "./ServiceDescriptor";
+import { Type } from "./serviceDescriptor";
+import ServiceDescriptorBuilder from "./serviceDescriptorBuilder";
 
-export default class Transient implements ServiceDescriptor {
+export default class Transient implements ServiceDescriptorBuilder {
 
-    private constructor(serviceName: string, private initialiser: (provider: ServiceProvider) => any) {
+    private constructor(serviceName: string, constructorFunction: Type<any>) {
         this.serviceName = serviceName;
+        this.constructorFunction = constructorFunction;
     }
 
-    getImplementation(provider: ServiceProvider): any {
-        return this.initialiser(provider);
+    withDependencies(dependencies: string[]): ServiceDescriptorBuilder {
+        this.dependencies = dependencies;
+        return this;
     }
+    serviceName: string;
+    constructorFunction: Type<any>;
+    dependencies: string[] = [];
 
-    readonly serviceName: string;
-
-    public static fromInstance(serviceName: string, implementation: any) : Transient {
-        return new Transient(serviceName, (provider: ServiceProvider) => implementation);
-    }
-
-    public static fromFactory(serviceName: string, factory: (provider: ServiceProvider) => any) : Transient {
-        return new Transient(serviceName, factory);
+    public static ofType(serviceName: string, type: Type<any>) : ServiceDescriptorBuilder {
+        return new Transient(serviceName, type);
     }
 }

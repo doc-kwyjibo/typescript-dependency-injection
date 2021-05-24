@@ -1,29 +1,26 @@
-import ServiceProvider from "../serviceProvider";
-import ServiceDescriptor from "./ServiceDescriptor";
+import { Type } from "./serviceDescriptor";
+import ServiceDescriptorBuilder from "./serviceDescriptorBuilder";
 
-export default class Singleton implements ServiceDescriptor {
+export default class Singleton implements ServiceDescriptorBuilder {
 
-    private constructor(serviceName: string, private initialiser: (provider: ServiceProvider) => any) {
+    private constructor(serviceName: string, constructorFunction: Type<any>) {
         this.serviceName = serviceName;
-        this.implementation = null;
+        this.constructorFunction = constructorFunction;
     }
-
-    private implementation: any | null;
-    getImplementation(provider: ServiceProvider): any {
-        if (this.implementation == null) {
-            this.implementation = this.initialiser(provider);
-        }
-        
-        return this.implementation;
+    withDependencies(dependencies: string[]): ServiceDescriptorBuilder {
+        this.dependencies = dependencies;
+        return this;
     }
+    constructorFunction: Type<any>;
+    dependencies: string[] = [];
 
     readonly serviceName: string;
 
-    public static fromInstance(serviceName: string, implementation: any) : Singleton {
-        return new Singleton(serviceName, (provider: ServiceProvider) => implementation);
+    public static fromInstance(serviceName: string, implementation: any) : ServiceDescriptorBuilder {
+        throw new Error("No facility to create singletons from instances");
     }
 
-    public static fromFactory(serviceName: string, factory: (provider: ServiceProvider) => any) : Singleton {
-        return new Singleton(serviceName, factory);
+    public static ofType(serviceName: string, constructorFunction: Type<any>) : ServiceDescriptorBuilder {
+        return new Singleton(serviceName, constructorFunction);
     }
 }
