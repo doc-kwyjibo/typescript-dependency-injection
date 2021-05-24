@@ -1,4 +1,4 @@
-import { Type } from "./serviceDescriptor";
+import { ServiceLifetime, Type } from "./serviceDescriptor";
 import ServiceDescriptorBuilder from "./serviceDescriptorBuilder";
 
 export default class Singleton implements ServiceDescriptorBuilder {
@@ -15,6 +15,7 @@ export default class Singleton implements ServiceDescriptorBuilder {
     dependencies: string[] = [];
 
     readonly serviceName: string;
+    readonly lifetime: ServiceLifetime = ServiceLifetime.Singleton;
 
     public static fromInstance(serviceName: string, implementation: any) : ServiceDescriptorBuilder {
         throw new Error("No facility to create singletons from instances");

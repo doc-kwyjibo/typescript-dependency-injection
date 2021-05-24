@@ -1,5 +1,6 @@
-import { Bar } from "./helperClasses";
+import { Bar, Foo } from "./helperClasses";
 import Singleton from '../src/Descriptors/singleton';
+import { ServiceLifetime } from "../src/Descriptors/serviceDescriptor";
 
 describe("Singleton", () => {
     test("Construction using ofType stores service name and implementation", () => {
@@ -11,6 +12,12 @@ describe("Singleton", () => {
         const instance = new descriptor.constructorFunction();
         expect(instance instanceof Bar).toBeTruthy();
     });
+
+    test("Lifetime is singleton", () => {
+        const descriptor = Singleton.ofType("MyService", Foo);
+
+        expect(descriptor.lifetime).toEqual(ServiceLifetime.Singleton);
+    })
 
     test("Able to store dependency list", () => {
         const serviceName = "MyService";
