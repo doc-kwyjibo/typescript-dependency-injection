@@ -8,7 +8,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "rm -Rf ./lib/* && tsc -- build tsconfig.json",
+    "build": "rm -Rf ./lib/* && tsc --build tsconfig.json",
     "test": "jest --config jestconfig.json",
     "copy:package": "cp README.md package.json ./lib",
     "deploy": "npm run build && npm run copy:package && npm publish lib"
