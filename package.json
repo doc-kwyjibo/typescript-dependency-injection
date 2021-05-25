@@ -8,20 +8,27 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tsc",
-    "test": "jest --config jestconfig.json"
+    "build": "rm -Rf ./lib/* && tsc -- build tsconfig.json",
+    "test": "jest --config jestconfig.json",
+    "copy:package": "cp README.md package.json ./lib",
+    "deploy": "npm run build && npm run copy:package && npm publish lib"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/doc-kwyjibo/kwyjibo-typescript-dependency-injection.git"
+    "url": "git+https://github.com/doc-kwyjibo/typescript-dependency-injection.git"
   },
-  "keywords": [],
-  "author": "doc_kwyjibo",
+  "keywords": [
+    "dependency",
+    "injection",
+    "typescript",
+    "javascript"
+  ],
+  "author": "doc-kwyjibo <doc@kwyjibo.dev>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/doc-kwyjibo/kwyjibo-typescript-dependency-injection/issues"
+    "url": "https://github.com/doc-kwyjibo/typescript-dependency-injection/issues"
   },
-  "homepage": "https://github.com/doc-kwyjibo/kwyjibo-typescript-dependency-injection#readme",
+  "homepage": "https://github.com/doc-kwyjibo/typescript-dependency-injection#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
