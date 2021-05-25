@@ -1,8 +1,8 @@
 # Dependency Injection for Typescript
 
 ![GitHub Workflow Status](https://github.com/doc-kwyjibo/typescript-dependency-injection/actions/workflows/build.yml/badge.svg)
-
-[![npm](https://img.shields.io/npm/v/typescript-dependency-injection.svg)](https://www.npmjs.com/package/typescript-dependency-injection)
+![GitHub Workflow Status](https://github.com/doc-kwyjibo/typescript-dependency-injection/actions/workflows/build-develop.yml/badge.svg)
+[![npm](https://img.shields.io/npm/v/@kwyjibo/typescript-dependency-injection.svg)](https://www.npmjs.com/package/@kwyjibo/typescript-dependency-injection)
 
 ## Motivation
 Common dependency injection packages in typescript, such as `tsyringe` or `inversify` rely on the `reflect-metadata` package to determine argument types and perform autowiring when constructing instances. In order to accomplish this functionality, decorators must be used to provide type information. The requirement to use decorators throughout the codebase adds increased complexity as there is no single location where all dependency information is maintained.
