@@ -1,5 +1,5 @@
 import { Bar, Foo } from "./helperClasses";
-import Transient from '../src/Descriptors/Transient';
+import Transient from '../src/Descriptors/transient';
 import { ServiceLifetime } from "../src/Descriptors/serviceDescriptor";
 
 describe("Transient", () => {
