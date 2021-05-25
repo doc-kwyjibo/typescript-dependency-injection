@@ -1,4 +1,4 @@
-import { ServiceLifetime, Type } from "./serviceDescriptor";
+import { Factory, ServiceLifetime, Type } from "./serviceDescriptor";
 import ServiceDescriptorBuilder from "./serviceDescriptorBuilder";
 
 export default class Transient implements ServiceDescriptorBuilder {
@@ -13,7 +13,8 @@ export default class Transient implements ServiceDescriptorBuilder {
         return this;
     }
     serviceName: string;
-    constructorFunction: Type<any>;
+    constructorFunction: Type<any> | null = null;
+    factoryFunction: Factory<any> | null = null;
     dependencies: string[] = [];
     readonly lifetime: ServiceLifetime = ServiceLifetime.Transient;
 

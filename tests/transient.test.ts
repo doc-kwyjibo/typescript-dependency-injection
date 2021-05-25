@@ -9,6 +9,8 @@ describe("Transient", () => {
         const descriptor = Transient.ofType(serviceName, Bar);
 
         expect(descriptor.serviceName).toEqual(serviceName);
+        expect(descriptor.constructorFunction).not.toBeNull();
+        // @ts-ignore TS2531 ignored as we want the runtime error
         const instance = new descriptor.constructorFunction();
         expect(instance instanceof Bar).toBeTruthy();
     });

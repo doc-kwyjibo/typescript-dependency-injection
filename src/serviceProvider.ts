@@ -32,12 +32,17 @@ export default class ServiceProvider {
 
         const args = dependencies.map(d => this.resolve<object>(d));
 
-        const instance = new descriptor.constructorFunction(...args);
+        let instance = null;
+        if (descriptor.constructorFunction != null) {
+            instance = new descriptor.constructorFunction(...args);
+        }
+        else if (descriptor.factoryFunction != null) {
+            instance = descriptor.factoryFunction(this);
+        }
         
         if (descriptor.lifetime === ServiceLifetime.Singleton) {
             this.constructedSingletons.set(serviceName, instance);
         }
-        
         
         return instance as T;
         
