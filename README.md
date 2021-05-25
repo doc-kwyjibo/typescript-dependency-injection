@@ -1,7 +1,6 @@
 # Dependency Injection for Typescript
 
 ![GitHub Workflow Status](https://github.com/doc-kwyjibo/typescript-dependency-injection/actions/workflows/build.yml/badge.svg)
-![GitHub Workflow Status](https://github.com/doc-kwyjibo/typescript-dependency-injection/actions/workflows/build-develop.yml/badge.svg)
 [![npm](https://img.shields.io/npm/v/@kwyjibo-developments/typescript-dependency-injection.svg)](https://www.npmjs.com/package/@kwyjibo-developments/typescript-dependency-injection)
 
 ## Motivation
