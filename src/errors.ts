@@ -15,3 +15,9 @@ export class MissingDependenciesError extends Error {
         super(message);
     }
 }
+
+export class MissingServiceError extends Error {
+    constructor(public missingServiceName: string, message?: string) {
+        super(message);
+    }
+}

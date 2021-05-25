@@ -1,4 +1,5 @@
-import ServiceDescriptor from "./Descriptors/serviceDescriptor";
+import ServiceDescriptor, { ServiceLifetime } from "./Descriptors/serviceDescriptor";
+import { MissingServiceError } from "./errors";
 
 export default class ServiceProvider {
 
@@ -11,7 +12,34 @@ export default class ServiceProvider {
 
     readonly services: string[];
 
+    private constructedSingletons: Map<string, any> = new Map<string, any>();
+
     resolve<T>(serviceName: string) : T {
-        throw new Error("Method not implemented");
+
+        // see if we don't need to do anything as we are trying 
+        // to get an already constructed singleton
+        if (this.constructedSingletons.has(serviceName)) {
+            return this.constructedSingletons.get(serviceName) as T;
+        }
+
+        const descriptor = this.descriptorMap.get(serviceName);
+
+        if (!descriptor) {
+            throw new MissingServiceError(serviceName);
+        }
+
+        const dependencies = descriptor.dependencies ?? [];
+
+        const args = dependencies.map(d => this.resolve<object>(d));
+
+        const instance = new descriptor.constructorFunction(...args);
+        
+        if (descriptor.lifetime === ServiceLifetime.Singleton) {
+            this.constructedSingletons.set(serviceName, instance);
+        }
+        
+        
+        return instance as T;
+        
     }
 }
