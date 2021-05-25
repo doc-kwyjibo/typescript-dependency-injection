@@ -5,7 +5,9 @@ import ServiceProvider from "./serviceProvider";
 export default class ServiceCollection {
     private descriptors: ServiceDescriptor[] = [];
 
-    register(descriptor: ServiceDescriptor): ServiceCollection {
+    private instances: Map<string, any> = new Map<string, any>();
+
+    registerService(descriptor: ServiceDescriptor): ServiceCollection {
 
         if (this.descriptors.some(d => d.serviceName === descriptor.serviceName)) {
             throw new DuplicateServiceNameError(descriptor.serviceName, `Attempted to register duplicate service name ${descriptor.serviceName}`);
@@ -14,6 +16,7 @@ export default class ServiceCollection {
         this.descriptors.push(descriptor);
         return this;
     }
+
     build(): ServiceProvider {
 
         // check for all dependencies first

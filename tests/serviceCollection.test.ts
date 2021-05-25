@@ -10,7 +10,7 @@ describe("ServiceCollection", () => {
             .returns("D1").object();
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(descriptor);
+        serviceCollection.registerService(descriptor);
 
         expect(serviceCollection["descriptors"]).toContainEqual(descriptor);
     });
@@ -24,8 +24,8 @@ describe("ServiceCollection", () => {
             .returns("D2").object();
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(d1)
-                            .register(d2);
+        serviceCollection.registerService(d1)
+                            .registerService(d2);
 
         expect(serviceCollection["descriptors"]).toContainEqual(d1);
         expect(serviceCollection["descriptors"]).toContainEqual(d2);
@@ -40,8 +40,8 @@ describe("ServiceCollection", () => {
             .setup(i => i.dependencies).returns([]);
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(d1.object())
-                            .register(d2.object());
+        serviceCollection.registerService(d1.object())
+                            .registerService(d2.object());
 
         const serviceProvider = serviceCollection.build();
         expect(serviceProvider.services).toContain("D1");
@@ -57,8 +57,8 @@ describe("ServiceCollection", () => {
             .setup(i => i.dependencies).returns(["D1"]);
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(d1.object())
-                            .register(d2.object());
+        serviceCollection.registerService(d1.object())
+                            .registerService(d2.object());
 
         expect(() => serviceCollection.build()).toThrow(CyclicDependenciesError);
     });
@@ -72,9 +72,9 @@ describe("ServiceCollection", () => {
             .returns("D1").object();
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(d1);
+        serviceCollection.registerService(d1);
 
-        expect(() => serviceCollection.register(d2)).toThrow(DuplicateServiceNameError);
+        expect(() => serviceCollection.registerService(d2)).toThrow(DuplicateServiceNameError);
     });
 
     it("throws an error when a service is missing a dependency", () => {
@@ -83,8 +83,8 @@ describe("ServiceCollection", () => {
             .setup(i => i.dependencies).returns(["D2"]);
 
         const serviceCollection = new ServiceCollection();
-        serviceCollection.register(d1.object());
+        serviceCollection.registerService(d1.object());
 
         expect(() => serviceCollection.build()).toThrow(MissingDependenciesError);     
-    })
+    });
 });

@@ -1,5 +1,5 @@
 {
-  "name": "kwyjibo-typescript-dependency-injection",
+  "name": "@kwyjibo/typescript-dependency-injection",
   "version": "1.0.0",
   "description": "DI container for typescript project",
   "main": "lib/index.js",
