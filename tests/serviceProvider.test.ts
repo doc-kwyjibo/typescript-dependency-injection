@@ -1,4 +1,4 @@
-import { It, Mock } from 'moq.ts';
+import { Mock } from 'moq.ts';
 import { Bar, BarBaz, Baz, Foo } from "./helperClasses";
 import ServiceDescriptor, { ServiceLifetime } from '../src/Descriptors/serviceDescriptor';
 import ServiceProvider from '../src/serviceProvider';
